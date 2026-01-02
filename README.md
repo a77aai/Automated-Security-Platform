@@ -24,15 +24,12 @@ Automated Alert Injection: Feeds AI-generated alerts and severity assessments ba
 Multi-Format Knowledge Ingestion: Includes tools to process and ingest security documents from PDF, JSON, Excel, and TXT formats.
 
 
-File,			  Description
-
-RAG.py,			"The core engine. It monitors Wazuh archives, performs vector searches, queries the LLM, and injects alerts back into Wazuh.+1"
-
-chunk_and_prepare.py,	"A utility script to process raw documents (PDF, Excel, JSON) and split them into semantic chunks."
-
-embed_and_upsert.py,	 Converts text chunks into vector embeddings using BAAI/bge-small-en-v1.5 and uploads them to Qdrant.+1
-
-rules.xml,		"Custom Wazuh rules defined to detect, classify, and display the AI-generated alerts in the dashboard."
+| File | Description |
+| :--- | :--- |
+| `RAG.py` | The core engine. It monitors Wazuh archives, performs vector searches, queries the LLM, and injects alerts back into Wazuh. |
+| `chunk_and_prepare.py` | A utility script to process raw documents (PDF, Excel, JSON) and split them into semantic chunks. |
+| `embed_and_upsert.py` | Converts text chunks into vector embeddings using `BAAI/bge-small-en-v1.5` and uploads them to Qdrant. |
+| `rules.xml` | Custom Wazuh rules defined to detect, classify, and display the AI-generated alerts in the dashboard. |
 
 
 🛠️ Prerequisites
@@ -119,5 +116,6 @@ This project was developed as a graduation project for a Bachelor's degree in In
 Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 
 Core Tools: Wazuh, Qdrant, Ollama.
+
 
 
