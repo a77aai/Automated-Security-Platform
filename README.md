@@ -88,7 +88,7 @@ Enable TCP Input: Modify `/var/ossec/etc/ossec.conf` to accept logs via TCP on p
 
 Restart Wazuh:
 
-Bash
+
 ```bash
 systemctl restart wazuh-manager
 ```
@@ -121,6 +121,7 @@ This project was developed as a graduation project for a Bachelor's degree in In
 Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 
 Core Tools: Wazuh, Qdrant, Ollama.
+
 
 
 
