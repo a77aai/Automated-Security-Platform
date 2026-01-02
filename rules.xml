@@ -1,0 +1,57 @@
+<group name="ai_sentinel,rag,">
+
+  <rule id="200001" level="3">
+    <decoded_as>json</decoded_as>
+    <description>AI Analysis Event Processed</description>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="200002" level="2">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">1|2</field> 
+    <description>Informational/Benign: $(ai_rule.description)</description>
+  </rule>
+  
+   <rule id="200004" level="4">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">3|4</field> 
+    <description>Suspicious but low risk: $(ai_rule.description)</description>
+  </rule>
+  
+   <rule id="200006" level="6">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">5|6</field> 
+    <description>Policy Violation / Low-confidence security event: $(ai_rule.description)</description>
+  </rule>
+  
+   <rule id="200008" level="8">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">7|8</field> 
+    <description>Confirmed suspicious activity without success: $(ai_rule.description)</description>
+  </rule>
+
+   <rule id="200009" level="9">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">9</field> 
+    <description>  Strong attack attempt or partial compromise indicators: $(ai_rule.description)</description>
+  </rule>
+  
+  <rule id="200010" level="10">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">10</field> 
+    <description>High risk — successful foothold indicators: $(ai_rule.description)</description>
+  </rule>
+  
+  <rule id="200013" level="13">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">11|12|13</field> 
+    <description>Very high  AI THREAT: $(ai_rule.description)</description>
+  </rule>
+  
+  <rule id="200015" level="15">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">14|15</field> 
+    <description>CRITICAL AI THREAT: $(ai_rule.description)</description>
+  </rule>
+
+</group>
