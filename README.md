@@ -45,10 +45,10 @@ Python: Version 3.10+.
 Wazuh Manager: Version 4.x.
 
 
-Qdrant: Vector Database running on port 6333.
+Qdrant: Vector Database running on port `6333`.
 
 
-Ollama: Running locally with the llama3.2 model pulled.
+Ollama: Running locally with the `llama3.2` model pulled.
 +1
 
 Python Dependencies
@@ -66,16 +66,16 @@ python3 chunk_and_prepare.py /path/to/raw_docs /path/to/chunked_output
 ```
 
 
-2.  Embed and Upsert to Qdrant: (Edit embed_and_upsert.py to point to your chunked_output directory)
+2.  Embed and Upsert to Qdrant: (Edit `embed_and_upsert.py` to point to your `chunked_output` directory)
 ```bash
 python3 embed_and_upsert.py
 ```
 
 2. Configure Wazuh
 
-Add Custom Rules: Copy the content of rules.xml into your Wazuh Manager's local rules file (usually /var/ossec/etc/rules/local_rules.xml).
+Add Custom Rules: Copy the content of `rules.xml` into your Wazuh Manager's local rules file (usually `/var/ossec/etc/rules/local_rules.xml`).
 
-Enable TCP Input: Modify `/var/ossec/etc/ossec.conf` to accept logs via TCP on port 5555:
+Enable TCP Input: Modify `/var/ossec/etc/ossec.conf` to accept logs via TCP on port `5555`:
 
 ```XML
 <remote>
@@ -102,7 +102,7 @@ python3 RAG.py
 
 🧠 How It Works
 
-Log Ingestion: RAG.py tails the archives.json file to catch real-time events.
+Log Ingestion: `RAG.py` tails the `archives.json` file to catch real-time events.
 
 
 Filtering: It filters logs based on specific criteria (e.g., high severity or suspicious keywords like "failed", "sudo").
@@ -121,6 +121,7 @@ This project was developed as a graduation project for a Bachelor's degree in In
 Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 
 Core Tools: Wazuh, Qdrant, Ollama.
+
 
 
 
