@@ -53,8 +53,9 @@ Ollama: Running locally with the llama3.2 model pulled.
 
 Python Dependencies
 Install the required libraries:
+```bash
 pip install sentence-transformers qdrant-client nltk requests pypdf openpyxl pandas pdfminer.six
-
+```
 ⚙️ Installation & Setup
 1. Build the Knowledge Base
 First, you need to populate the vector database with security context (e.g., playbooks, threat intelligence).
@@ -116,6 +117,7 @@ This project was developed as a graduation project for a Bachelor's degree in In
 Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 
 Core Tools: Wazuh, Qdrant, Ollama.
+
 
 
 
