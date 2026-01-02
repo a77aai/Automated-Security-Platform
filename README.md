@@ -125,9 +125,10 @@ Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 Core Tools: Wazuh, Qdrant, Ollama.
 
 
-ALL Right reserved 2026®
+`ALL Right reserved 2026®` 
 
 `Eng.Abdulmalek Salameh`
+
 
 
 
