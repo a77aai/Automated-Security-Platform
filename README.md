@@ -75,7 +75,7 @@ python3 embed_and_upsert.py
 
 Add Custom Rules: Copy the content of rules.xml into your Wazuh Manager's local rules file (usually /var/ossec/etc/rules/local_rules.xml).
 
-Enable TCP Input: Modify /var/ossec/etc/ossec.conf to accept logs via TCP on port 5555:
+Enable TCP Input: Modify `/var/ossec/etc/ossec.conf` to accept logs via TCP on port 5555:
 
 ```XML
 <remote>
@@ -121,6 +121,7 @@ This project was developed as a graduation project for a Bachelor's degree in In
 Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 
 Core Tools: Wazuh, Qdrant, Ollama.
+
 
 
 
