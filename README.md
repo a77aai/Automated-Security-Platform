@@ -126,6 +126,8 @@ Core Tools: Wazuh, Qdrant, Ollama.
 
 
 ALL Right reserved 2026®
-Eng.Abdulmalek Salameh
+
+`Eng.Abdulmalek Salameh`
+
 
 
