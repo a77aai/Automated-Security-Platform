@@ -61,12 +61,15 @@ pip install sentence-transformers qdrant-client nltk requests pypdf openpyxl pan
 First, you need to populate the vector database with security context (e.g., playbooks, threat intelligence).
 
 1   Chunk your documents:
+```bash
 python3 chunk_and_prepare.py /path/to/raw_docs /path/to/chunked_output
-
+```
 
 
 2.  Embed and Upsert to Qdrant: (Edit embed_and_upsert.py to point to your chunked_output directory)
+```bash
 python3 embed_and_upsert.py
+```
 
 2. Configure Wazuh
 
@@ -74,27 +77,28 @@ Add Custom Rules: Copy the content of rules.xml into your Wazuh Manager's local 
 
 Enable TCP Input: Modify /var/ossec/etc/ossec.conf to accept logs via TCP on port 5555:
 
-XML
-
+```XML
 <remote>
   <connection>syslog</connection>
   <port>5555</port>
   <protocol>tcp</protocol>
   <allowed-ips>127.0.0.1</allowed-ips>
 </remote>
+```
 
 Restart Wazuh:
 
 Bash
-
+```bash
 systemctl restart wazuh-manager
+```
+
 3. Run the AI Engine
 Start the main script to begin monitoring and analyzing logs:
 
-Bash
-
+```bash
 python3 RAG.py
-.
+```
 
 🧠 How It Works
 
@@ -117,6 +121,7 @@ This project was developed as a graduation project for a Bachelor's degree in In
 Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 
 Core Tools: Wazuh, Qdrant, Ollama.
+
 
 
 
