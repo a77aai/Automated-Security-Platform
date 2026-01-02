@@ -1,6 +1,7 @@
 Automated Security Platform (Wazuh + AI RAG)
 
 📌 Overview
+
 This project represents a next-generation Automated Security Platform that integrates the Wazuh SIEM/XDR capabilities with Generative AI (GenAI) using Retrieval-Augmented Generation (RAG) technology. The platform is designed to enhance Security Operations Centers (SOCs) by automating threat analysis, reducing false positives, and performing proactive threat hunting.
 +1
 
@@ -116,11 +117,13 @@ LLM Analysis: The log + retrieved context are sent to Llama 3.2. The model analy
 Alert Injection: The AI's findings are formatted as JSON and sent back to Wazuh via TCP port 5555, triggering the custom rules.
 
 📜 License & Acknowledgments
+
 This project was developed as a graduation project for a Bachelor's degree in Informatics Engineering (System and Network Security).
 
 Models used: Llama 3.2, BAAI/bge-small-en-v1.5.
 
 Core Tools: Wazuh, Qdrant, Ollama.
+
 
 
 
