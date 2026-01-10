@@ -11,7 +11,6 @@ from sentence_transformers import SentenceTransformer
 # CONFIGURATION
 # =========================
 WAZUH_ARCHIVES = "/var/ossec/logs/archives/archives.json"
-AI_ALERTS_OUTPUT = "/var/ossec/logs/alerts/ai_alerts.json"
 
 # Settings
 EMBED_MODEL_PATH = "/home/i77/AS-Platform/models/bge-small-en-v1.5"
@@ -225,7 +224,7 @@ def process_event(log_entry, embedder):
         
         level = final_json.get('ai_rule', {}).get('level', 0)
         
-        if level >= 5:
+        if level >= 1:
             write_to_wazuh(final_json)
         else:
             print(f"  [INFO] AI dismissed event (Level {level}) - Not Sending to Wazuh.")
@@ -290,7 +289,7 @@ def main():
             elif any(k in full_log_str for k in suspicious_keywords):
                 should_analyze = True
                 trigger_reason = "Suspicious Keyword Match"
-            else :
+            elif wazuh_level == 0 :
                 should_analyze = True
                 trigger_reason = "Suspicious Log"
 
@@ -312,4 +311,5 @@ def main():
             print(f"[ERROR] Main Loop: {e}")
 
 if __name__ == "__main__":
+
     main()
