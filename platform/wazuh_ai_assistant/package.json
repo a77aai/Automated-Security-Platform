@@ -1,0 +1,16 @@
+{
+  "name": "wazuh_ai_assistant",
+  "version": "2.19.3.0",
+  "private": true,
+  "description": "Floating AI assistant for Wazuh Dashboard",
+  "opensearchDashboards": {
+    "version": "2.19.3"
+  },
+  "scripts": {
+    "build": "plugin-helpers build",
+    "dev": "plugin-helpers start"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
+}

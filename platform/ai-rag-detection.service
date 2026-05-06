@@ -1,0 +1,17 @@
+[Unit]
+Description=AI RAG Detection Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/i77/AS-Platform/services
+ExecStart=/usr/bin/python3 /home/i77/AS-Platform/services/ai_rag_sentinel.py
+EnvironmentFile=-/etc/default/ai-rag-detection
+StandardOutput=append:/home/i77/AS-Platform/logs/ai-rag-detection.log
+StandardError=append:/home/i77/AS-Platform/logs/ai-rag-detection.err
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

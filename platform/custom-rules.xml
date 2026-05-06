@@ -1,0 +1,273 @@
+<!-- Local rules -->
+
+<!-- Modify it at your will. -->
+<!-- Copyright (C) 2015, Wazuh Inc. -->
+
+<!-- Example -->
+
+<group name="local,syslog,sshd,">
+
+  <!--
+  Dec 10 01:02:02 host sshd[1234]: Failed none for root from 1.1.1.1 port 1066 ssh2
+  -->
+  <rule id="100001" level="5">
+    <if_sid>5716</if_sid>
+    <srcip>1.1.1.1</srcip>
+    <description>sshd: authentication failed from IP 1.1.1.1</description>
+    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5</group>
+  </rule>
+
+
+<rule id="100100" level="10">
+  <description>test log from agent</description>
+  <match>wazuh test log</match>
+</rule>
+
+
+  
+<rule id="100140" level="15">
+  <if_sid>60103</if_sid>
+  <field name="win.system.eventID">^5156$</field>
+  <field name="win.eventdata.sourcePort">^445$</field>
+  <options>no_full_log</options>
+  <description>Connection to SMB port (445) detected via Event ID 5156 - Possible MS17-010 Scaning</description>
+  <group>network,windows,smb</group>
+</rule>
+
+  
+
+
+  <rule id="100020" level="15">
+        <if_sid>60105</if_sid>
+        <field name="win.system.eventID">^4625$</field>
+        <description> Windows RDP failed login attempt detected</description>
+        <group>windows,rdp,authentication_failed</group>
+    </rule>
+    
+    
+
+</group>
+
+ <group name="windows,">
+
+  <rule id="100008" level="10">
+    <if_sid>61100</if_sid> <field name="win.system.eventID">7045</field>
+    <field name="win.eventdata.ServiceName" type="pcre2">^[a-zA-Z0-9]{10,16}$|PSEXECSVC</field>
+    <field name="win.eventdata.ImagePath" type="pcre2">powershell\.exe -nop -w hidden -noni -c "if\(\[IntPtr\]::Size -eq 4\)\{\$b=''powershell\.exe''\}else\{\$b=\$env:windir\+\''\\syswow64\\WindowsPowerShell\\v1\.0\\powershell\.exe''\};\$s=New-Object System\.Diagnostics\.ProcessStartInfo;\$s\.FileName=\$b;\$s\.Arguments=''|</field>
+    <description>Windows System Event: Detection of a suspicious service creation (EventID 7045). Likely PsExec/Metasploit payload execution. Check service name and image path.</description>
+    <group>attack,gaining_access,eternalblue,psexec,service_creation,</group>
+    <mitre>
+      <id>T1569.001</id>
+    </mitre>
+  </rule>
+
+
+</group>
+
+
+
+<group name="virustotal,">
+  <rule id="100092" level="12">
+      <if_sid>657</if_sid>
+      <match>Successfully removed threat</match>
+      <description>$(parameters.program) removed threat located at $(parameters.alert.data.virustotal.source.file)</description>
+  </rule>
+
+  <rule id="100093" level="12">
+    <if_sid>657</if_sid>
+    <match>Error removing threat</match>
+    <description>Error removing threat located at $(parameters.alert.data.virustotal.source.file)</description>
+  </rule>
+</group>
+
+
+<group name="linux, webshell, windows,">
+  <!-- This rule detects file creation. -->
+  <rule id="100500" level="12">
+    <if_sid>554</if_sid>
+    <field name="file" type="pcre2">(?i).php$|.phtml$|.php3$|.php4$|.php5$|.phps$|.phar$|.asp$|.aspx$|.jsp$|.cshtml$|.vbhtml$</field>
+    <description>[File creation]: Possible web shell scripting file ($(file)) created</description>
+    <mitre>
+      <id>T1105</id>
+      <id>T1505</id>
+    </mitre>
+  </rule>
+  
+
+  <rule id="100501" level="12">
+    <if_sid>550</if_sid>
+    <field name="file" type="pcre2">(?i).php$|.phtml$|.php3$|.php4$|.php5$|.phps$|.phar$|.asp$|.aspx$|.jsp$|.cshtml$|.vbhtml$</field>
+    <description>[File modification]: Possible web shell content added in $(file)</description>
+    <mitre>
+      <id>T1105</id>
+      <id>T1505</id>
+    </mitre>
+  </rule>
+
+  <rule id="100502" level="15">
+    <if_sid>100501</if_sid>
+    <field name="changed_content" type="pcre2">(?i)passthru|exec|eval|shell_exec|assert|str_rot13|system|phpinfo|base64_decode|chmod|mkdir|fopen|fclose|readfile|show_source|proc_open|pcntl_exec|execute|WScript.Shell|WScript.Network|FileSystemObject|Adodb.stream</field>
+    <description>[File Modification]: File $(file) contains a web shell</description>
+    <mitre>
+      <id>T1105</id>
+      <id>T1505.003</id>
+    </mitre>
+  </rule>
+</group>
+
+
+<!-- Linux Rules. -->
+<group name="auditd, linux, webshell,">
+  <!-- This rule detects web shell command execution. -->
+  <rule id="100520" level="12">
+    <if_sid>80700</if_sid>
+    <field name="audit.key">webshell_command_exec</field>
+    <description>[Command execution ($(audit.exe))]: Possible web shell attack detected</description>
+    <mitre>
+      <id>T1505.003</id>
+      <id>T1059.004</id>
+    </mitre>
+  </rule>
+  <!-- This rule detects web shell network connections. -->
+  <rule id="100521" level="12">
+    <if_sid>80700</if_sid>
+    <field name="audit.key">webshell_net_connect</field>
+    <description>[Network connection via $(audit.exe)]: Possible web shell attack detected</description>
+    <mitre>
+      <id>TA0011</id>
+      <id>T1049</id>
+      <id>T1505.003</id>
+    </mitre>
+  </rule>
+</group>
+
+
+<group name="ai_sentinel,rag,">
+
+  <rule id="200001" level="3">
+    <decoded_as>json</decoded_as>
+    <description>AI Analysis Event Processed</description>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="200002" level="2">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">1|2</field> 
+    <description>Informational/Benign: $(ai_rule.description)</description>
+  </rule>
+  
+   <rule id="200004" level="3">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">3|4</field> 
+    <description>Suspicious but low risk: $(ai_rule.description)</description>
+  </rule>
+  
+   <rule id="200006" level="6">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">5|6</field> 
+    <description>Policy Violation / Low-confidence security event: $(ai_rule.description)</description>
+  </rule>
+  
+   <rule id="200008" level="8">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">7|8</field> 
+    <description>Confirmed suspicious activity without success: $(ai_rule.description)</description>
+  </rule>
+
+   <rule id="200009" level="9">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">9</field> 
+    <description>  Strong attack attempt or partial compromise indicators: $(ai_rule.description)</description>
+  </rule>
+  
+  <rule id="200010" level="10">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">10</field> 
+    <description>High risk — successful foothold indicators: $(ai_rule.description)</description>
+  </rule>
+  
+  <rule id="200013" level="13">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">11|12|13</field> 
+    <description>Very high  AI THREAT: $(ai_rule.description)</description>
+  </rule>
+  
+  <rule id="200015" level="15">
+    <if_sid>200001</if_sid>
+    <field name="ai_rule.level">14|15</field> 
+    <description>CRITICAL AI THREAT: $(ai_rule.description)</description>
+  </rule>
+
+</group>
+
+
+<group name="ai_response,rag">
+  <rule id="200019" level="2">
+    <if_sid>200001</if_sid>
+    <field name="response_id">000_response_ai</field>
+    <field name="response_origin" type="pcre2">^(ai_response_engine|ai_control_api)$</field>
+    <field name="ai_response.recommended_action" type="pcre2">.+</field>
+    <description>AI response base rule</description>
+  </rule>
+
+  <rule id="200020" level="12">
+    <if_sid>200019</if_sid>
+    <field name="ai_response.auto_execute">True</field>
+    <field name="ai_response.response_command" type="pcre2">.+</field>
+    <description>AI response requires automatic execution</description>
+    <group>ai_response,rag,auto_execute,</group>
+  </rule>
+
+  <rule id="200021" level="5">
+    <if_sid>200019</if_sid>
+    <field name="ai_response.auto_execute">False</field>
+    <description>AI response recommendation</description>
+    <group>ai_response,rag,manual_recommendation,</group>
+  </rule>
+</group>
+
+<group name="ai_stage3,ai_response,active_response,">
+  <rule id="200030" level="1">
+    <if_sid>200001</if_sid>
+    <field name="response_id">000_response_ai</field>
+    <field name="event" type="pcre2">.+</field>
+    <description>AI action journal base event</description>
+    <options>no_full_log</options>
+    <group>ai_action_journal,</group>
+  </rule>
+
+  <rule id="200033" level="4">
+    <if_sid>200030</if_sid>
+    <field name="event" type="pcre2">^(unblock_ip_success|enable_user_success|unisolate_host_success|restore_success)$</field>
+    <description>AI action rollback executed successfully</description>
+    <group>ai_action_rollback_success,</group>
+  </rule>
+
+  <rule id="200034" level="7">
+    <if_sid>200030</if_sid>
+    <field name="event" type="pcre2">^(unblock_ip_failed|enable_user_failed|unisolate_host_failed|restore_failed)$</field>
+    <description>AI action rollback failed</description>
+    <group>ai_action_rollback_failed,</group>
+  </rule>
+
+  <rule id="200035" level="3">
+    <if_sid>200030</if_sid>
+    <field name="event">quarantine_delete_ignored</field>
+    <description>AI quarantine rollback requires manual restore</description>
+    <group>ai_action_manual_restore,</group>
+  </rule>
+
+  <rule id="200031" level="5">
+    <if_sid>200030</if_sid>
+    <field name="event" type="pcre2">^(quarantine_success|block_ip_success|kill_process_success|disable_user_success|isolate_host_success)$</field>
+    <description>AI action executed successfully on endpoint</description>
+    <group>ai_action_success,</group>
+  </rule>
+
+  <rule id="200032" level="8">
+    <if_sid>200030</if_sid>
+    <field name="event" type="pcre2">^(quarantine_failed|block_ip_failed|kill_process_failed|disable_user_failed|isolate_host_failed)$</field>
+    <description>AI action execution failed on endpoint</description>
+    <group>ai_action_failed,</group>
+  </rule>
+</group>

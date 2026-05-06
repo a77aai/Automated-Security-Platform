@@ -1,0 +1,31 @@
+[Unit]
+Description=AI Control API Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/i77/AS-Platform/services
+Environment=AI_CONTROL_API_BIND=0.0.0.0
+Environment=AI_CONTROL_API_PORT=8777
+Environment=OLLAMA_URL=http://192.168.56.1:11434/api/generate
+Environment=OLLAMA_MODEL=llama3.2
+
+Environment=WAZUH_API_URL=https://127.0.0.1:55000
+Environment=WAZUH_API_USER=wazuh-wui
+Environment=WAZUH_API_PASSWORD=YOUR_API_PASSWORD
+Environment=WAZUH_API_VERIFY_TLS=false
+
+Environment=WAZUH_INDEXER_URL=https://127.0.0.1:9200
+Environment=WAZUH_INDEXER_USER=kibanaserver
+Environment=WAZUH_INDEXER_PASSWORD=YOUR_INDEXER_PASSWORD
+Environment=WAZUH_INDEXER_INDEX_PATTERN=wazuh-alerts-*
+Environment=WAZUH_INDEXER_TIMEOUT=15
+Environment=WAZUH_INDEXER_VERIFY_TLS=false
+
+ExecStart=/usr/bin/python3 /home/i77/AS-Platform/services/ai_control_api.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

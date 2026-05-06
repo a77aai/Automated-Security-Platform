@@ -1,0 +1,17 @@
+[Unit]
+Description=AI RAG Response and Mitigations Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/i77/AS-Platform/services
+EnvironmentFile=-/etc/default/ai-rag-response
+StandardOutput=append:/home/i77/AS-Platform/logs/ai-rag-response.log
+StandardError=append:/home/i77/AS-Platform/logs/ai-rag-response.err
+ExecStart=/usr/bin/python3 /home/i77/AS-Platform/services/ai_rag_response.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

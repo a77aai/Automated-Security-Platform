@@ -1,0 +1,8 @@
+{
+  "id": "wazuhAiAssistant",
+  "version": "2.19.3",
+  "server": true,
+  "ui": true,
+  "requiredPlugins": [],
+  "optionalPlugins": []
+}
