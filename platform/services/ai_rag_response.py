@@ -1039,8 +1039,7 @@ def parse_ai_detection_line(line):
     if not raw:
         return None
 
-    # مهم جداً:
-    # لا تعمل json_loads إلا إذا السطر غالباً هو AI detection alert.
+  
     if not raw_line_has_detection_ai_id(raw):
         return None
 
