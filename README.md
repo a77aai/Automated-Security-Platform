@@ -1,6 +1,6 @@
 # Automated Security Platform (Wazuh + AI RAG + Active Response)
 
-![Project](https://img.shields.io/badge/Project-AI%20Security%20Platform-blue)
+![Project](https://img.shields.io/badge/Project-Automated%20Security%20Platform-blue)
 ![Wazuh](https://img.shields.io/badge/Wazuh-4.14.0-005571)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-yellow)
 ![Qdrant](https://img.shields.io/badge/Vector%20DB-Qdrant-green)
@@ -8,7 +8,7 @@
 
 ## 📌 Overview
 
-This project is an **Automated AI-Powered Security Platform** that extends the capabilities of **Wazuh SIEM/XDR** by integrating **Retrieval-Augmented Generation (RAG)**, **Large Language Models (LLMs)**, **Qdrant Vector Database**, and **Wazuh Active Response**.
+This project is an **Automated Security Platform** that extends the capabilities of **Wazuh SIEM/XDR** by integrating **Retrieval-Augmented Generation (RAG)**, **Large Language Models (LLMs)**, **Qdrant Vector Database**, and **Wazuh Active Response**.
 
 The platform is designed to support Security Operations Center (SOC) workflows by improving alert analysis, reducing false positives, generating contextual security explanations, recommending response actions, and executing selected actions under controlled safety conditions.
 
